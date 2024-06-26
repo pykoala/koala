@@ -13,6 +13,8 @@ import numpy as np
 from matplotlib import pyplot as plt
 from scipy import interpolate
 from scipy import optimize
+import logging
+
 # =============================================================================
 # Astropy and associated packages
 # =============================================================================
@@ -22,6 +24,26 @@ from astropy.io import fits
 # =============================================================================
 # PyKOALA modules
 # =============================================================================
+
+logger = logging.getLogger('pykoala.logger')
+
+if not (logger.hasHandlers()):
+    stdout = logging.StreamHandler()
+    fmt = logging.Formatter(
+    "[PyKOALA] %(asctime)s | %(levelname)s > %(message)s")   
+    stdout.setFormatter(fmt)
+    logger.addHandler(stdout)
+    logger.setLevel(logging.INFO)
+
+def log_into_file(filename, level='INFO'):
+    logger = logging.getLogger('pykoala.logger')
+    hdlr = logging.FileHandler(filename)
+    fmt = logging.Formatter(
+    "[PyKOALA] %(asctime)s | %(levelname)s > %(message)s")   
+    hdlr.setFormatter(fmt)
+    logger.addHandler(hdlr) 
+    logger.setLevel(level)
+
 
 
 def vprint(*arg, **kwargs):
